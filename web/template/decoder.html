@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Art-interface</title>
+        <link rel="stylesheet" href="/static/css/styles.css">        
+    </head>
+
+<body>
+    <header>
+        <div id="headersText">ART INTERFACE</div>
+    </header>
+
+    <main>
+        <div class="themeToggleButtons">
+        <button class="oval" type="button" id="themeToggle">Toggle Light/Dark</button>
+        <a class="oval" id="home" href="http://localhost:8080/">Home</a>
+        </div>
+
+        <form action="/decoder" id="myForm" method="POST">
+            <textarea type="text" name="inputString" id="userInput" placeholder="Enter your coded picture or ASCII art here" rows="22" cols="70"></textarea>
+            <div class="buttons">
+                <button class="oval" type="submit" name="buttonAction" value="decode" id="decodeButton">Decode</button>
+                <button class="oval" type="submit" name="buttonAction" value="encode" id="encodeButton">Encode</button>
+            </div>
+        </form>
+
+        <div id="resultArea">
+        {{if .Error}}
+            <p class="error">{{.Error}}</p>
+        {{else}}
+            <p id="information">{{.Result}}</p>
+        {{end}}
+    </div>
+    </main>
+
+    <footer>
+        <section>
+            <p>This page is made by Reigo Reimets in 2024</p>
+            <ul id="footer-icons">
+                <li id="socialLogos"><a href="https://www.instagram.com/reigo.reimets"target="_blank"><img src="/static/icons/instagram_logo.png" alt="Icon: Instagram icon" height="20"> </a></li>
+                <li id="socialLogos"><a href="https://www.facebook.com/reigo.reimets"target="_blank"><img src="/static/icons/facebook-logo2.png" alt="Icon: Facebook icon" height="20"> </a></li>
+                <li id="socialLogos"><a href="https://www.linkedin.com/in/reigoreimets/"target="_blank"><img src="/static/icons/linkedin-logo2.png" alt="Icon: LinkedIn icon" height="20"> </a></li>
+            </ul>
+        </section>
+    </footer>
+
+    <script src="/static/js/theme-switcher.js"></script>
+
+</body>
+</html>
