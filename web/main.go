@@ -42,6 +42,7 @@ type Data struct {
 	CarModels     []CarModels    `json:"carModels"`
 }
 
+// this main is made just for testing
 func main() {
 	// Eeldus, et `data.json` on sama kataloogi all
 	file, err := os.ReadFile("../api/data.json")

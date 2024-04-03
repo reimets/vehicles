@@ -17,7 +17,8 @@ lisaks tegin body-sse ja ka js-i lisad, et leht laeks sujuvalt 1 sek jooksul - n
     --filterbutton-text-color: #333;
     --background-color: #777;
     --button-background-color: linear-gradient(#6f6f6f, #6f6f6f, #555);
-    --filterbutton-background-color: #919191; 
+    --filterbutton-background-color: #919191;
+    --selectedbutton-frame-color: #ffffff; 
 
     --main-background-color: #6f6f6f;
     --textarea-background-color: #333; 
@@ -33,6 +34,8 @@ lisaks tegin body-sse ja ka js-i lisad, et leht laeks sujuvalt 1 sek jooksul - n
     --background-color: #ffffff;
     --button-background-color: linear-gradient(#b8b8b8, #f0f0f0, #f0f0f0);
     --filterbutton-background-color: #666;
+    --selectedbutton-frame-color: #000000; 
+
 
     --main-background-color: #f0f0f0;
     --textarea-background-color: #ffffff;
@@ -125,9 +128,31 @@ footer {
 }
 
 .logo {
-    height: 40px;
+    height: 50px;
     margin-top: 25px;
+}
 
+.logo-container {
+    position: relative;
+    display: inline-block;
+}
+
+.popup {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.logo-container:hover .popup {
+    display: block;
 }
 
 #headersText {
@@ -220,7 +245,6 @@ nav {
     border-radius: 5px;
     cursor: pointer;
 }
-
 
 #all-manufacturers-button, #all-categories-button {
     font-size: 0.6em;
@@ -432,4 +456,10 @@ button {
 
 button:hover {
     opacity: 0.7;
+}
+
+/* when button is selected */
+.selected {
+    border: 2px solid var(--selectedbutton-frame-color);
+        /* with this line 1px frame will be greated around button */
 }

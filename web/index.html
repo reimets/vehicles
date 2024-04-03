@@ -20,25 +20,52 @@ Ava veebibrauser ja mine aadressile http://localhost:8000.
          <div id="headersText">CAR VIEWER</div>
          <div class="themeToggleButtons">
              <a class="oval" id="home" href="http://localhost:8000/">Home</a>
-     
              <button class="oval" type="button" id="themeToggle">Toggle Light/Dark</button>
          </div>
          
          <!-- manufacturers logos area -->
          <div class="logos">
-            <img id="nissan-logo" class="logo" src="/static/icons/nissan-logo.png" alt="Nissan logo">
-             <img id="honda-logo" class="logo" src="/static/icons/honda-logo.png" alt="Honda logo">
-             <img id="bmw-logo" class="logo" src="/static/icons/bmw-logo.png" alt="BMW logo">
-             <img id="merzedes-bens-logo-logo" class="logo" src="/static/icons/merzedes-bens-logo.png" alt="Merzedes-Bens logo">
-             <img id="ford-logo" class="logo" src="/static/icons/ford-logo.png" alt="Ford logo">
-             <img id="audi-logo" class="logo" src="/static/icons/audi-logo.png" alt="Audi logo">
-             <img id="chevrolet-logo" class="logo" src="/static/icons/chevrolet-logo.png" alt="Chevrolet logo">
-             <img id="hyundai-logo" class="logo" src="/static/icons/hyundai-logo.png" alt="Hyundai logo">
-             <img id="lexus-logo" class="logo" src="/static/icons/lexus-logo.png" alt="Lexus logo">
-             <img id="toyota-logo" class="logo" src="/static/icons/toyota-logo.png" alt="Toyota logo">
-
+             <div class="logo-container">
+                <img id="nissan-logo" class="logo" src="/static/icons/nissan-logo.png" alt="Nissan logo">
+                <div class="popup" id="nissan-popup">Nissan</div>
+             </div>
+             <div class="logo-container">
+                <img id="honda-logo" class="logo" src="/static/icons/honda-logo.png" alt="Honda logo">
+                <div class="popup" id="honda-popup">Honda</div>
+             </div>
+             <div class="logo-container">
+                <img id="hyundai-logo" class="logo" src="/static/icons/hyundai-logo.png" alt="Hyundai logo">
+                <div class="popup" id="hyundai-popup">Hyundai</div>
+             </div>
+             <div class="logo-container">
+                <img id="chevrolet-logo" class="logo" src="/static/icons/chevrolet-logo.png" alt="Chevrolet logo">
+                <div class="popup" id="chevrolet-popup">Chevrolet</div>
+             </div>
+             <div class="logo-container">
+                <img id="merzedes-bens-logo-logo" class="logo" src="/static/icons/merzedes-bens-logo.png" alt="Merzedes-Bens logo">
+                <div class="popup" id="merzedes-bens-popup">Merzedes-Bens</div>
+             </div>
+             <div class="logo-container">
+                <img id="audi-logo" class="logo" src="/static/icons/audi-logo.png" alt="Audi logo">
+                <div class="popup" id="audi-popup">Audi</div>
+             </div>
+             <div class="logo-container">
+                <img id="ford-logo" class="logo" src="/static/icons/ford-logo.png" alt="Ford logo">
+                <div class="popup" id="ford-popup">Ford</div>
+             </div>
+             <div class="logo-container">
+                <img id="bmw-logo" class="logo" src="/static/icons/bmw-logo.png" alt="BMW logo">
+                <div class="popup" id="bmw-popup">BMW</div>
+             </div>
+             <div class="logo-container">
+                <img id="lexus-logo" class="logo" src="/static/icons/lexus-logo.png" alt="Lexus logo">
+                <div class="popup" id="lexus-popup">Lexus</div>
+             </div>
+             <div class="logo-container">
+                <img id="toyota-logo" class="logo" src="/static/icons/toyota-logo.png" alt="Toyota logo">
+                <div class="popup" id="toyota-popup">Toyota</div>
+             </div>
          </div>
-
      </header>
 
      <main>
@@ -46,11 +73,10 @@ Ava veebibrauser ja mine aadressile http://localhost:8000.
              <div class="flex-container">
                  <div class="flex-item">
                      <p id="filterBy"> FILTER BY... </p>
-                     <!-- <button class="oval-clear" type="button" id="clearSelection">Clear Selection</button> -->
                  </div>
      
                  <div class="flex-item" id="manufacturers">
-                         <button id="all-manufacturers-button" value="all-manufacturers">All Manufacturers</button>
+                         <button id="all-manufacturers-button" class="all-manufacturers-button" value="all-manufacturers">All Manufacturers</button>
                          <button class="manufacturer-button" value="toyota">Toyota</button>
                          <button class="manufacturer-button" value="honda">Honda</button>
                          <button class="manufacturer-button" value="bmw">BMW</button>
@@ -64,7 +90,7 @@ Ava veebibrauser ja mine aadressile http://localhost:8000.
                  </div>
      
                  <div class="flex-item" id="categories">
-                     <button id="all-categories-button" value="all-categories">All Categories</button>
+                     <button id="all-categories-button" class="all-categories-button" value="all-categories">All Categories</button>
                      <button class="category-button" value="suv">SUV</button>
                      <button class="category-button" value="sedan">Sedan</button>
                      <button class="category-button" value="coupe">Coupe</button>
@@ -78,7 +104,6 @@ Ava veebibrauser ja mine aadressile http://localhost:8000.
                  </div>
 
                  <div class="flex-item">
-                    <!-- <p id="filterBy"> FILTER BY... </p> -->
                     <button class="oval-clear" type="button" id="clearSelection">Clear Selection</button>
                 </div>
              </div>
@@ -88,28 +113,28 @@ Ava veebibrauser ja mine aadressile http://localhost:8000.
              <aside class="sidebar">
                  <div>
                      <p id="sortBy"> SORT BY... </p>
-                     <button class="sort-button" type="submit" name="buttonAction" value="Make-asc">Make asc</button>
-                     <button class="sort-button" type="submit" name="buttonAction" value="Make-desc">Make desc</button>
-                     <button class="sort-button" type="submit" name="buttonAction" value="year-asc">Year asc</button>
-                     <button class="sort-button" type="submit" name="buttonAction" value="year-desc">Year desc</button>
-                     <button class="sort-button" type="submit" name="buttonAction" value="category-asc">Category asc</button>
-                     <button class="sort-button" type="submit" name="buttonAction" value="category-desc">Category desc</button>
-                     <button class="sort-button" type="submit" name="buttonAction" value="engine-asc">Engine asc</button>
-                     <button class="sort-button" type="submit" name="buttonAction" value="engine-desc">Engine desc</button>
-                     <button class="sort-button" type="submit" name="buttonAction" value="horsepower-asc">Horsepower asc</button>
-                     <button class="sort-button" type="submit" name="buttonAction" value="horsepower-desc">Horsepower desc</button>
-                     <button class="sort-button" type="submit" name="buttonAction" value="transmission-asc">Transmission asc</button>
-                     <button class="sort-button" type="submit" name="buttonAction" value="transmission-desc">Transmission desc</button>                    
-                     <button class="sort-button" type="submit" name="buttonAction" value="drivetrain-asc">Drivetrain asc</button>
-                     <button class="sort-button" type="submit" name="buttonAction" value="drivetrain-desc">Drivetrain desc</button>
+                     <button class="sort-button" type="button" name="buttonAction" value="make-asc">Make asc</button>
+                     <button class="sort-button" type="button" name="buttonAction" value="make-desc">Make desc</button>
+                     <button class="sort-button" type="button" name="buttonAction" value="year-asc">Year asc</button>
+                     <button class="sort-button" type="button" name="buttonAction" value="year-desc">Year desc</button>
+                     <button class="sort-button" type="button" name="buttonAction" value="category-asc">Category asc</button>
+                     <button class="sort-button" type="button" name="buttonAction" value="category-desc">Category desc</button>
+                     <button class="sort-button" type="button" name="buttonAction" value="engine-asc">Engine asc</button>
+                     <button class="sort-button" type="button" name="buttonAction" value="engine-desc">Engine desc</button>
+                     <button class="sort-button" type="button" name="buttonAction" value="horsepower-asc">Horsepower asc</button>
+                     <button class="sort-button" type="button" name="buttonAction" value="horsepower-desc">Horsepower desc</button>
+                     <button class="sort-button" type="button" name="buttonAction" value="transmission-asc">Transmission asc</button>
+                     <button class="sort-button" type="button" name="buttonAction" value="transmission-desc">Transmission desc</button>                    
+                     <button class="sort-button" type="button" name="buttonAction" value="drivetrain-asc">Drivetrain asc</button>
+                     <button class="sort-button" type="button" name="buttonAction" value="drivetrain-desc">Drivetrain desc</button>
                  </div>
  
              </aside>
-             <section class="contentArea">
-                <div id="resultArea">
+             <div class="contentArea">
+                <div id="info-output">
                     <p id="information"> One day results will appear here..</p>
                 </div> 
-             </section>
+            </div>
          </div>
      </main>
  
