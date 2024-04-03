@@ -6,108 +6,125 @@ Ava veebibrauser ja mine aadressile http://localhost:8000.
  -->
 
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Car-viewer</title>
-        <link rel="stylesheet" href="/static/css/styles.css">
-    </head>
-
-<body>      
-    <header>
-        <div id="headersText">CAR VIEWER</div>
-        <div class="themeToggleButtons">
-            <a class="oval" id="home" href="http://localhost:8000/">Home</a>
-    
-            <button class="oval" type="button" id="themeToggle">Toggle Light/Dark</button>
-            </div>
-    </header>
-
-    <main>
-        <!-- <div class="themeToggleButtons">
-        <a class="oval" id="home" href="http://localhost:8080/">Home</a>
-
-        <button class="oval" type="button" id="themeToggle">Toggle Light/Dark</button>
-        </div> -->
-        <nav>
-            <!-- <p id="information"> Sort option appear here..</p> -->
-
-            <div id="filters">
-                <button id="manufacturer">
-                    <button value="all"All manufacturers></button>
-                    <option value="Toyota"Toyota></option>
-                    <option value="Honda"Honda></option>
-                    <option value="all"All manufacturers></option>
-                    <option value="all"All manufacturers></option>
-                    <option value="all"All manufacturers></option>
-                    <option value="all"All manufacturers></option>
-                    <option value="all"All manufacturers></option>
-                    <option value="all"All manufacturers></option>
-                    <option value="all"All manufacturers></option>
-                    <option value="all"All manufacturers></option>
-    
-                </button>
-            </div>
-        </nav>
+ <!DOCTYPE html>
+ <html lang="en">
+     <head>
+         <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title>Car-viewer</title>
+         <link rel="stylesheet" href="/static/css/styles.css">
+     </head>
+ 
+ <body>      
+     <header>
+         <div id="headersText">CAR VIEWER</div>
+         <div class="themeToggleButtons">
+             <a class="oval" id="home" href="http://localhost:8000/">Home</a>
      
-        
-        <div class="main-content">
-            <aside class="sidebar">
-                <div>
-                    <p id="sortBy"> SORT BY... </p>
-                    <button class="sort-button" type="submit" name="buttonAction" value="Make-asc">Make asc</button>
-                    <button class="sort-button" type="submit" name="buttonAction" value="Make-desc">Make desc</button>
-                    <button class="sort-button" type="submit" name="buttonAction" value="year-asc">Year asc</button>
-                    <button class="sort-button" type="submit" name="buttonAction" value="year-desc">Year desc</button>
-                    <button class="sort-button" type="submit" name="buttonAction" value="category-asc">Category asc</button>
-                    <button class="sort-button" type="submit" name="buttonAction" value="category-desc">Category desc</button>
-                    <button class="sort-button" type="submit" name="buttonAction" value="engine-asc">Engine asc</button>
-                    <button class="sort-button" type="submit" name="buttonAction" value="engine-desc">Engine desc</button>
-                    <button class="sort-button" type="submit" name="buttonAction" value="horsepower-asc">Horsepower asc</button>
-                    <button class="sort-button" type="submit" name="buttonAction" value="horsepower-desc">Horsepower desc</button>
-                    <button class="sort-button" type="submit" name="buttonAction" value="transmission-asc">Transmission asc</button>
-                    <button class="sort-button" type="submit" name="buttonAction" value="transmission-desc">Transmission desc</button>                    
-                    <button class="sort-button" type="submit" name="buttonAction" value="drivetrain-asc">Drivetrain asc</button>
-                    <button class="sort-button" type="submit" name="buttonAction" value="drivetrain-desc">Drivetrain desc</button>
+             <button class="oval" type="button" id="themeToggle">Toggle Light/Dark</button>
+         </div>
+         
+         <!-- manufacturers logos area -->
+         <div class="logos">
+            <img id="nissan-logo" class="logo" src="/static/icons/nissan-logo.png" alt="Nissan logo">
+             <img id="honda-logo" class="logo" src="/static/icons/honda-logo.png" alt="Honda logo">
+             <img id="bmw-logo" class="logo" src="/static/icons/bmw-logo.png" alt="BMW logo">
+             <img id="merzedes-bens-logo-logo" class="logo" src="/static/icons/merzedes-bens-logo.png" alt="Merzedes-Bens logo">
+             <img id="ford-logo" class="logo" src="/static/icons/ford-logo.png" alt="Ford logo">
+             <img id="audi-logo" class="logo" src="/static/icons/audi-logo.png" alt="Audi logo">
+             <img id="chevrolet-logo" class="logo" src="/static/icons/chevrolet-logo.png" alt="Chevrolet logo">
+             <img id="hyundai-logo" class="logo" src="/static/icons/hyundai-logo.png" alt="Hyundai logo">
+             <img id="lexus-logo" class="logo" src="/static/icons/lexus-logo.png" alt="Lexus logo">
+             <img id="toyota-logo" class="logo" src="/static/icons/toyota-logo.png" alt="Toyota logo">
+
+         </div>
+
+     </header>
+
+     <main>
+         <nav>
+             <div class="flex-container">
+                 <div class="flex-item">
+                     <p id="filterBy"> FILTER BY... </p>
+                     <!-- <button class="oval-clear" type="button" id="clearSelection">Clear Selection</button> -->
+                 </div>
+     
+                 <div class="flex-item" id="manufacturers">
+                         <button id="all-manufacturers-button" value="all-manufacturers">All Manufacturers</button>
+                         <button class="manufacturer-button" value="toyota">Toyota</button>
+                         <button class="manufacturer-button" value="honda">Honda</button>
+                         <button class="manufacturer-button" value="bmw">BMW</button>
+                         <button class="manufacturer-button" value="audi">Audi</button>
+                         <button class="manufacturer-button" value="mercedes-benz">Mercedes-Benz</button>
+                         <button class="manufacturer-button" value="ford">Ford</button>
+                         <button class="manufacturer-button" value="chevrolet">Chevrolet</button>
+                         <button class="manufacturer-button" value="hyundai">Hyundai</button>
+                         <button class="manufacturer-button" value="lexus">Lexus</button>
+                         <button class="manufacturer-button" value="nissan">Nissan</button>
+                 </div>
+     
+                 <div class="flex-item" id="categories">
+                     <button id="all-categories-button" value="all-categories">All Categories</button>
+                     <button class="category-button" value="suv">SUV</button>
+                     <button class="category-button" value="sedan">Sedan</button>
+                     <button class="category-button" value="coupe">Coupe</button>
+                     <button class="category-button" value="truck">Truck</button>
+                     <button class="category-button" value="hatchback">Hatchback</button>
+                     <button class="category-button" value="convertible">Convertible</button>
+                     <button class="category-button" value="wagon">Wagon</button>
+                     <button class="category-button" value="electric">Electric</button>
+                     <button class="category-button" value="luxury">Luxury</button>
+                     <button class="category-button" value="sports">Sports</button>
+                 </div>
+
+                 <div class="flex-item">
+                    <!-- <p id="filterBy"> FILTER BY... </p> -->
+                    <button class="oval-clear" type="button" id="clearSelection">Clear Selection</button>
                 </div>
-                <!-- <p id="information"> Filter option appear here..</p> -->
-
-            </aside>
-            <section class="contentArea">
-
-                <!-- <div id="resultArea"> -->
-                    <p id="information"> Results appear here..</p>
-                    <!-- </div> -->
-            </section>
-        </div>
-<!-- 
-        <form action="/decoder" id="myForm" method="POST">
-            <textarea type="text" name="inputString" id="userInput" placeholder="Enter your coded picture or ASCII art here" rows="22" cols="70"></textarea>
-            <div class="buttons">
-                <button class="oval" type="submit" name="buttonAction" value="decode" id="decodeButton">Clear selection</button>
-                <button class="oval" type="submit" name="buttonAction" value="encode" id="encodeButton">Encode</button>
-            </div>
-        </form> -->
-<!-- 
-        <div id="resultArea">
-        <p id="information"> Your result will appear here..</p>
-        </div> -->
-    </main>
-
-    <footer>
-        <section>
-            <p>This page is made by Reigo Reimets in 2024</p>
-            <ul id="footer-icons">
-                <li id="socialLogos"><a href="https://www.instagram.com/reigo.reimets"target="_blank" rel="noopener noreferrer"><img src="/static/icons/instagram_logo.png" alt="Icon: Instagram icon" height="20"> </a></li>
-                <li id="socialLogos"><a href="https://www.facebook.com/reigo.reimets"target="_blank" rel="noopener noreferrer"><img src="/static/icons/facebook-logo2.png" alt="Icon: Facebook icon" height="20"> </a></li>
-                <li id="socialLogos"><a href="https://www.linkedin.com/in/reigoreimets/"target="_blank" rel="noopener noreferrer"><img src="/static/icons/linkedin-logo2.png" alt="Icon: LinkedIn icon" height="20"> </a></li>
-            </ul>
-        </section>
-    </footer>
-
-    <script src="/static/js/script.js"></script>
-
-</body>
-</html>
+             </div>
+         </nav>
+        
+         <div class="main-content">
+             <aside class="sidebar">
+                 <div>
+                     <p id="sortBy"> SORT BY... </p>
+                     <button class="sort-button" type="submit" name="buttonAction" value="Make-asc">Make asc</button>
+                     <button class="sort-button" type="submit" name="buttonAction" value="Make-desc">Make desc</button>
+                     <button class="sort-button" type="submit" name="buttonAction" value="year-asc">Year asc</button>
+                     <button class="sort-button" type="submit" name="buttonAction" value="year-desc">Year desc</button>
+                     <button class="sort-button" type="submit" name="buttonAction" value="category-asc">Category asc</button>
+                     <button class="sort-button" type="submit" name="buttonAction" value="category-desc">Category desc</button>
+                     <button class="sort-button" type="submit" name="buttonAction" value="engine-asc">Engine asc</button>
+                     <button class="sort-button" type="submit" name="buttonAction" value="engine-desc">Engine desc</button>
+                     <button class="sort-button" type="submit" name="buttonAction" value="horsepower-asc">Horsepower asc</button>
+                     <button class="sort-button" type="submit" name="buttonAction" value="horsepower-desc">Horsepower desc</button>
+                     <button class="sort-button" type="submit" name="buttonAction" value="transmission-asc">Transmission asc</button>
+                     <button class="sort-button" type="submit" name="buttonAction" value="transmission-desc">Transmission desc</button>                    
+                     <button class="sort-button" type="submit" name="buttonAction" value="drivetrain-asc">Drivetrain asc</button>
+                     <button class="sort-button" type="submit" name="buttonAction" value="drivetrain-desc">Drivetrain desc</button>
+                 </div>
+ 
+             </aside>
+             <section class="contentArea">
+                <div id="resultArea">
+                    <p id="information"> One day results will appear here..</p>
+                </div> 
+             </section>
+         </div>
+     </main>
+ 
+     <footer>
+         <section>
+             <p>This page is made by Reigo Reimets in 2024</p>
+             <ul id="footer-icons">
+                 <li id="socialLogos"><a href="https://www.instagram.com/reigo.reimets"target="_blank" rel="noopener noreferrer"><img src="/static/icons/instagram_logo.png" alt="Icon: Instagram icon" height="20"> </a></li>
+                 <li id="socialLogos"><a href="https://www.facebook.com/reigo.reimets"target="_blank" rel="noopener noreferrer"><img src="/static/icons/facebook-logo2.png" alt="Icon: Facebook icon" height="20"> </a></li>
+                 <li id="socialLogos"><a href="https://www.linkedin.com/in/reigoreimets/"target="_blank" rel="noopener noreferrer"><img src="/static/icons/linkedin-logo2.png" alt="Icon: LinkedIn icon" height="20"> </a></li>
+             </ul>
+         </section>
+     </footer>
+ 
+     <script src="/static/js/script.js"></script>
+ 
+ </body>
+ </html>

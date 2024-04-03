@@ -1,6 +1,4 @@
 /* Reset some defaults browser styles 
-See CSS reegel kasutab universaalset selektorit *, mis rakendab stiili kõikidele elemenditele HTML dokumendis. Selle lähenemise eesmärk on tagada ühtlane alusstiil 
-kogu veebilehe või -rakenduse jaoks, enne kui rakendatakse konkreetsemate elementide spetsiifilisemaid stiile. 
 */
 
 /* Siin on :root pseudoklassis defineeritud heleda teema värvid ja [data-theme="dark"] valikus tumeda teema värvid. CSS Custom Properties 
@@ -9,16 +7,21 @@ kogu veebilehe või -rakenduse jaoks, enne kui rakendatakse konkreetsemate eleme
 /* panin vaikimisi tumeda režiimi, sest kui vaikimisi oli hele ja siis muutsin lehe tumedaks, siis tekkis tumedas reziimis ebemeeldiv olukord, kus
 leht tuli korraks läbi heleda režiimi.. see häiris.. kui on vaikimisi tume ning siis minna heledasse režiimi, siis see nii ei häiri, 
 lisaks tegin body-sse ja ka js-i lisad, et leht laeks sujuvalt 1 sek jooksul - nii ei häiri peaaegu üldse see režiimi vahetuses käimine */
+
+
+/* === General Styles === */
 :root {
     --text-shadow-color: #000000;
     --primary-text-color: #c6c2c2;
     --info-text-color: #d3d3d3;
+    --filterbutton-text-color: #333;
     --background-color: #777;
     --button-background-color: linear-gradient(#6f6f6f, #6f6f6f, #555);
+    --filterbutton-background-color: #919191; 
 
     --main-background-color: #6f6f6f;
-    --textarea-background-color: #333; /* Tumedas režiimis textarea taustavärv */
-   --header-background: linear-gradient(#333, #555, #777);
+    --textarea-background-color: #333; 
+    --header-background: linear-gradient(#333, #555, #777);
     --footer-background: linear-gradient(#777, #555, #333);
 }
 
@@ -26,14 +29,15 @@ lisaks tegin body-sse ja ka js-i lisad, et leht laeks sujuvalt 1 sek jooksul - n
     --text-shadow-color: #575757;
     --primary-text-color: #333;
     --info-text-color: #6c6c6c;
+    --filterbutton-text-color: #c6c2c2;
     --background-color: #ffffff;
     --button-background-color: linear-gradient(#b8b8b8, #f0f0f0, #f0f0f0);
+    --filterbutton-background-color: #666;
 
     --main-background-color: #f0f0f0;
-    --textarea-background-color: #ffffff; /* Heleda režiimi textarea taustavärv */
+    --textarea-background-color: #ffffff;
     --header-background: linear-gradient(#b8b8b8, #cfcfcf, #ffffff);
     --footer-background: linear-gradient(#ffffff, #cfcfcf, #b8b8b8);
-
 }
 
 * {
@@ -44,170 +48,367 @@ lisaks tegin body-sse ja ka js-i lisad, et leht laeks sujuvalt 1 sek jooksul - n
     transition: all 0.3s ease;
 }
 
-main {
-    overflow-y: auto; /* Määrab, et kui <main> elemendi sisu kõrgus ületab selle konteineri kõrguse, siis kuvatakse vertikaalne kerimisriba (y-teljel), 
-    mis võimaldab kasutajal näha ülejäänud sisu. Kui sisu mahub konteinerisse, kerimisriba ei kuvata.*/
-    /* display: flex; */
-    /* justify-content: space-between; */
-    
-    margin: 20px; /* Määrab elemendi ümber välisääriste (margin), lisades 20 pikslit ruumi elemendi ja selle ümbritsevate elementide vahele igast küljest. */
-    padding: 20px; /* Määrab elemendi sisemise ääriste (padding), lisades 20 pikslit ruumi elemendi piiride ja selle sisu vahel igast küljest. */
-    /* background-color: #f0f0f0; Määrab elemendi taustavärvi heledaks halliks (värvikood #f0f0f0). */
-    
-    background-color: var(--main-background-color); /* Määrab elemendi taustavärvi heledaks halliks (värvikood #f0f0f0). */
+body {
+    opacity: 0;
+    transition: opacity 1s ease-in-out; 
+    color: var(--primary-text-color);
+    background-color: var(--background-color);
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    min-width: 280px;
+    /* min-width: 975px; */
+}
 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Lisab elemendile varju, et luua sügavuse mulje. Varju omadused on järgmised: horisontaalne nihkeväärtus 0, 
-    vertikaalne nihkeväärtus 4 pikslit, hägususe raadius 6 pikslit ja värv must (rgba(0, 0, 0, 0.1)) 10% läbipaistvusega.*/ 
-    min-height: calc(155vh - 160px); /* Määrab elemendi kõrguseks 137 viewport'i kõrgust (vh) miinus 160 pikslit. calc() funktsioon võimaldab arvutada kõrguse 
-    dünaamiliselt, võttes arvesse viewport'i suurust ja maha arvates kindla väärtuse, sel juhul 160 pikslit. See tagab, et element saab kohanduva kõrguse, 
-    mis sõltub seadme ekraani suurusest. */
-    height: flex;
-
+body.loaded {
+    opacity: 1;
 }
 
 header, footer, nav {
     width: 100%;
 }
 
-nav {
-    height: 200px;
-    /* background-image: var(--header-background); */
+header {
+    background-image: var(--header-background);
     color: var(--primary-text-color);
-    /* background-image: linear-gradient(#b8b8b8, #cfcfcf, #ffffff); gradient ala headeris */
-    /* color: #333; */
     text-align: center;
     padding: 2rem;
     font-weight: bold;
+}
+
+main {
+    overflow-y: auto;
+    margin: 20px; 
+    margin-top: 1px;
+    padding: 20px;
+    background-color: var(--main-background-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
+    /* /////////////////////// */
+    /* min-height: 500px; */
+    max-height: max-content;
+    /* min-height: calc(155vh - 160px);  */
+    height: flex;
+}
+
+footer {
+    background-image: var(--footer-background);
+    color: var(--primary-text-color);
+    text-align: center;
+    line-height: 1.5;
+    padding: 2rem 0;
+    position: absolute;
+    width: 100%;
+}
+
+
+/* === Header Styles & Headers Buttons === */
+.themeToggleButtons {
+    display: flex;
+    justify-content: center ; 
+    width: 100%;
+    gap: clamp(25px, 20vw, 350px); /* vahe minimaalselt 50px, kohandub ekraani laiusega, maksimaalselt 350px */
+}
+
+.oval {
+    width: 150px;
+    height: 75px;
+    background-image: var(--button-background-color);
+    color: var(--primary-text-color);
+    font-weight: 700;
+    text-shadow: 1px 2px 7px var(--text-shadow-color);
+    text-align: center;
+    line-height: 20px;
+    border-radius: 50%; 
+}
+
+.oval:hover {
+    opacity: 0.7;
+}
+
+.logo {
+    height: 40px;
+    margin-top: 25px;
+
+}
+
+#headersText {
+    text-shadow: 1px 2px 7px var(--text-shadow-color);
+    font-size: 3em;
+    font-weight: 800;
+}
+
+#home {
+    width: 150px; 
+    height: 75px; 
+    background-image: var(--button-background-color);
+    color: var(--primary-text-color);
+    font-weight: 600;
+    font-size: 0.9em;
+    text-shadow: 1px 2px 7px var(--text-shadow-color);
+    text-align: center;
+    line-height: 20px;
+    border-radius: 50%;
+    padding: 25px 20px; 
+    cursor: pointer;
+}
+
+/* #themeToggle {
+    Tuleviku jaoks koht olemas
+} */
+
+
+/* === Main Styles & Main Buttons === */
+/* ===== Filter Section & Buttons ===== */
+nav {
+    color: var(--primary-text-color);
+    text-align: center;
+    font-weight: bold;
 
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items:flex-start ;
     min-width: 100%;
     max-width: max-content;
-    margin: 10px auto;
-    /* padding: 30px; */
-    /* background-color: #f0f0f0; */
+    padding: 10px;
     background-color: var(--main-background-color);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    height: flex;
 }
 
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.flex-item {
+    max-width: 360px; 
+    box-sizing: border-box;
+}
+
+.oval-clear {
+    /* margin-top: 5px; */
+    margin-bottom: 5px;
+
+    width: 130px;
+    height: 55px;
+    background-image: var(--button-background-color);
+    font-size: 0.7em;
+    color: var(--primary-text-color);
+    font-weight: 700;
+    text-shadow: 1px 2px 7px var(--text-shadow-color);
+    text-align: center;
+    line-height: 20px;
+    border-radius: 50%; 
+}
+
+.manufacturer-button, .category-button {
+    font-size: 0.6em;
+    padding: 10px; 
+    width: 110px;
+    height: 40px;
+    background-image: var(--button-background-color);
+    color: var(--primary-text-color);
+    font-weight: 700;
+    text-shadow: 1px 2px 7px var(--text-shadow-color);
+    text-align: center;
+    line-height: 20px;
+    margin-bottom: 5px;
+
+    padding: 10px 10px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+#all-manufacturers-button, #all-categories-button {
+    font-size: 0.6em;
+    padding: 10px; 
+    width: 110px;
+    height: 40px;
+    color: var(--filterbutton-text-color);
+    font-weight: 700;
+    text-shadow: 1px 2px 7px var(--text-shadow-color);
+    text-align: center;
+    line-height: 20px;
+    margin-bottom: 5px;
+
+    padding: 10px 10px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--filterbutton-background-color);
+}
+
+#filterBy {
+    flex: 0 0 150px;
+    width: 130px;
+    background-image: var(--button-background-color);
+    color: var(--primary-text-color);
+    font-weight: 600;
+    font-size: 0.7em;
+    text-shadow: 1px 2px 7px var(--text-shadow-color);
+    text-align: center;
+    line-height: 10px; 
+    margin-bottom: 5px;
+    padding: 25px; 
+}
+
+#manufacturers {
+    /* flex: 0 0 340px; */
+    flex: auto;
+    /* flex: 0 0 45%; */
+}
+
+#categories {
+    /* flex: 0 0 340px;  */
+    /* flex: 0 0 45%; */
+    flex: auto;
+}
+
+/* #clearSelection {
+    Tuleviku jaoks koht olemas
+} */
+
+/* Readjusting, if page is smaller than 1100px */
+@media (max-width: 1100px) {
+    #headersText {
+        font-size: 2em;
+    }
+
+    .flex-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .flex-item {
+        max-width: 100%;
+    }
+
+    #manufacturers, #categories {
+        margin-bottom: 10px;
+    }
+
+    #filterBy, #clearSelection {
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+}
+
+
+/* ===== Sort and Result Area & Buttons ===== */
 .main-content {
     display: flex;
 }
 
 .sidebar {
     width: 20%;
-    min-width: 180px;
+    min-width: 150px;
     height: flex;
-    /* background-image: var(--header-background); */
     color: var(--primary-text-color);
-    /* background-image: linear-gradient(#b8b8b8, #cfcfcf, #ffffff); gradient ala headeris */
-    /* color: #333; */
     text-align: center;
-    padding: 0.7rem;
+    padding: 0.6rem;
     font-weight: bold;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* min-width: 100%; */
-    /* max-width: max-content; */
     margin: 10px auto;
-    /* padding: 30px; */
-    /* background-color: #f0f0f0; */
     background-color: var(--main-background-color);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.sort-button {
+    font-size: 0.6em;
+    padding: 10px; 
+    width: 130px;
+    height: 40px;
+    background-image: var(--button-background-color);
+    color: var(--primary-text-color);
+    font-weight: 700;
+    text-shadow: 1px 2px 7px var(--text-shadow-color);
+    text-align: center;
+    line-height: 20px;
+    margin-bottom: 5px;
 }
 
 .contentArea {
     width: 79%;
     min-height: 500px;
     max-height: max-content;
-    /* background-image: var(--header-background); */
     color: var(--primary-text-color);
-    /* background-image: linear-gradient(#b8b8b8, #cfcfcf, #ffffff); gradient ala headeris */
-    /* color: #333; */
-    text-align: center;
+    text-align: left;
     padding: 2rem;
     font-weight: bold;
 
     display: flex;
     flex-direction: column;
-    align-items: center;
-    /* min-width: 100%; */
-    /* max-width: max-content; */
+    align-items: left;
     margin: 10px auto;
-    /* padding: 30px; */
-    /* background-color: #f0f0f0; */
     background-color: var(--main-background-color);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-header {
-    background-image: var(--header-background);
+#sortBy {
+    background-image: var(--button-background-color);
     color: var(--primary-text-color);
-    /* background-image: linear-gradient(#b8b8b8, #cfcfcf, #ffffff); gradient ala headeris */
-    /* color: #333; */
-    text-align: center;
-    padding: 2rem;
-    font-weight: bold;
-}
-
-/* Stiil pealkirjale */
-#headersText {
-    /* text-shadow: 1px 2px 7px #575757; */
+    font-weight: 600;
+    font-size: 0.7em;
     text-shadow: 1px 2px 7px var(--text-shadow-color);
-    font-size: 3em;
-    font-weight: 800;
-}
-
-body {
-    opacity: 0; /* Alguses on lehekülg täiesti läbipaistev */
-    transition: opacity 1s ease-in-out; /* Määratleb, kuidas opacity muutus toimub */
-    color: var(--primary-text-color);
-    background-color: var(--background-color);
-
-    font-family: Arial, sans-serif;
-    /* background-color: #ffffff; */
-    /* color: #333; */
-    line-height: 1.6; /* tekstirea kõrgus */
-    min-width: 280px;
-}
-
-/*    ka siin on üks lehe sujuvaks ilmumiseks mõeldav variant */
-/* 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-body {
-    animation: fadeIn 0.5s ease-out;
-}
-*/
-
-body.loaded {
-    opacity: 1; /* Kui leht on laetud, muutub see täielikult opaakseks */
-}
-
-
-
-footer {
-    background-image: var(--footer-background);
-    color: var(--primary-text-color);
-    /* background-image: linear-gradient(#ffffff, #cfcfcf, #b8b8b8); */
-    /* color: #333; */
     text-align: center;
-    line-height: 1.5;
-    padding: 2rem 0; /* Sellise padding-i määramisega antakse elemendile rohkem ruumi üles ja alla, kuid jäetakse selle küljed puutumata, ilma lisaruumita. 
-    See on kasulik, kui soovitakse sisu vertikaalselt keskendada või lihtsalt lisada ülemist ja alumist ruumi ilma elementi külgedelt laiendamata. */
-    position: absolute;
-    width: 100%;
+    line-height: 10px;
+    margin-bottom: 25px;
+    padding: 25px; 
 }
 
+#information {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    color: var(--info-text-color);
+    padding: 15px;
+}
+
+/* Readjusting, if page is smaller than 550px */
+@media (max-width: 550px) {
+    .flex-container, .flex-item, #filterBy {
+        width: 100%;
+        padding: 0; 
+        margin: 0 auto;
+    }
+
+    #filterBy {
+        padding: 25px 0;
+        margin-bottom: 10px;
+    }
+
+    .main-content {
+        flex-direction: column; 
+    }
+
+    .sidebar, .contentArea {
+        width: 100%; 
+        margin: 10px 0; 
+    }
+
+    .sidebar {
+        align-items: center; 
+    }  
+
+    #sortBy {
+        margin-bottom: 10px;
+    }
+
+    .manufacturer-button, .category-button {
+        width: 130px;
+    } 
+}
+
+
+/* === Footer Styles & Footer Buttons === */
 #footer-icons{
     list-style-type: none;
     display: flex;
@@ -220,202 +421,15 @@ footer {
     opacity: 0.4;
 }
 
+
+/* === Button Styles === */
 button {
-    padding: 10px 20px; /* ülal-all, vasakul-paremal */
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
-/* see peab ka olema, sest muidu "home" nupul läks tekst paigast ära */
-#home {
-    width: 150px; /* Muutke laiust vajadusel */
-    height: 75px; /* Muutke kõrgust vajadusel */
-    /* background-image: linear-gradient(#b8b8b8, #f0f0f0, #f0f0f0); */
-    background-image: var(--button-background-color);
-    /* color: #333; */
-    color: var(--primary-text-color);
-    font-weight: 600;
-    font-size: 0.9em;
-    /* text-shadow: 1px 2px 7px #575757; */
-    text-shadow: 1px 2px 7px var(--text-shadow-color);
-    text-align: center;
-    line-height: 20px; /* Reguleerige teksti vertikaalset keskendamist */
-    border-radius: 50%; /* See tekitab ovaalse kuju */
-    /* margin-bottom: 20px; */
-
-    padding: 25px 20px; 
-    cursor: pointer;
-}
-
-#sortBy {
-    /* width: 150px; */
-    /* height: 75px;  */
-    /* background-image: linear-gradient(#b8b8b8, #f0f0f0, #f0f0f0); */
-    background-image: var(--button-background-color);
-    /* color: #333; */
-    color: var(--primary-text-color);
-    font-weight: 600;
-    font-size: 0.9em;
-    /* text-shadow: 1px 2px 7px #575757; */
-    text-shadow: 1px 2px 7px var(--text-shadow-color);
-    text-align: center;
-    line-height: 10px; /* Reguleerige teksti vertikaalset keskendamist */
-    /* border-radius: 50%; */
-    margin-bottom: 25px;
-    padding: 25px; 
-    /* cursor: pointer; */
-}
-
-.oval:hover {
-    opacity: 0.7;
-}
-
 button:hover {
     opacity: 0.7;
 }
-
-/* #myForm { */
-    /* justify-content: center; */
-    /* font-family: 'Consolas', 'Courier New', monospace;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 625px;
-    max-width: max-content;
-    height: 400px;
-    margin: 20px auto;
-    padding: 30px; */
-    /* background-color: #f0f0f0; */
-    /* background-color: var(--main-background-color);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-} */
-
-/* #resultArea {
-    font-family: 'Consolas', 'Courier New', monospace;
-    line-height: 1.1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    min-width: 625px;
-    max-width: max-content;
-    min-height: 200px;
-    max-height: max-content;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: var(--main-background-color);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    white-space: pre;
-    overflow-y: auto;
-    word-wrap: normal;
-} */
-
-/* .error {
-    font-size: 12px;
-    font-weight: 600;
-    color: #ff0000;
-    padding: 15px;
-} */
-
-#information {
-    font-family: 'Consolas', 'Courier New', monospace;
-
-    font-size: 14px;
-    /* color: #6c6c6c; */
-    color: var(--info-text-color);
-    padding: 15px;
-}
-
-/* textarea {
-    border-radius: 10px;
-    color: var(--primary-text-color); Kasuta sama värvi muutujat teksti värvi jaoks */
-    /* color: #7a7a7abc; */
-    /* padding: 5px;
-    background-color: var(--textarea-background-color); Uuendatud */
-/* } */
-
-/* #userInput {
-    font-family: 'Consolas', 'Courier New', monospace;
-
-    overflow-y: auto;
-    width: 100%;
-    height: 400px;
-    margin-bottom: 10px; /* Lisab ruumi sisestusvälja ja nuppude vahel */
-/* } */
-
-/* Nuppude paigutuse jaoks mõeldud konteiner */
-.buttons {
-    display: flex;
-    justify-content: center ; /* Jaotab nupud ühtlaselt */
-    width: 100%; /* Võimaldab nuppudel võtta kogu vormi laiuse */
-    gap: 50px;
-}
-
-.themeToggleButtons {
-    display: flex;
-    justify-content: center ; /* Jaotab nupud ühtlaselt */
-    width: 100%; /* Võimaldab nuppudel võtta kogu vormi laiuse */
-    /* gap: 50px; */
-    gap: clamp(25px, 20vw, 350px); /* Minimaalselt 50px, kohandub ekraani laiusega, maksimaalselt 350px */
-}
-
-.sort-button {
-    padding: 15px; 
-    width: 160px; /* Muutke laiust vajadusel */
-    height: 50px; /* Muutke kõrgust vajadusel */
-    /* background-image: linear-gradient(#b8b8b8, #f0f0f0, #f0f0f0); */
-    background-image: var(--button-background-color);
-
-    /* color: #333; */
-    color: var(--primary-text-color);
-    font-weight: 700;
-    /* font-size: 1em; */
-    /* text-shadow: 1px 2px 7px #575757; */
-    text-shadow: 1px 2px 7px var(--text-shadow-color);
-    text-align: center;
-    line-height: 20px; /* Reguleerige teksti vertikaalset keskendamist */
-    /* border-radius: 50%; See tekitab ovaalse kuju */
-    margin-bottom: 5px;
-}
-
-.oval {
-    width: 150px; /* Muutke laiust vajadusel */
-    height: 75px; /* Muutke kõrgust vajadusel */
-    /* background-image: linear-gradient(#b8b8b8, #f0f0f0, #f0f0f0); */
-    background-image: var(--button-background-color);
-
-    /* color: #333; */
-    color: var(--primary-text-color);
-    font-weight: 700;
-    /* font-size: 1em; */
-    /* text-shadow: 1px 2px 7px #575757; */
-    text-shadow: 1px 2px 7px var(--text-shadow-color);
-    text-align: center;
-    line-height: 20px; /* Reguleerige teksti vertikaalset keskendamist */
-    border-radius: 50%; /* See tekitab ovaalse kuju */
-    /* margin-bottom: 20px; */
-}
-
-/* see on hea variant mida endale õppimisse siia alles jätta.. nimelt - see paneb kodulehe vaikimisi selliseks, milline on kasutaja arvuti seadistus.
-Dark või light mode 
-see oli ChatGPT vestluses V4-art lõpuviimistlus '
-*/
-/* 
-@media (prefers-color-scheme: dark) {
-    :root {
-      --text-shadow-color: #000000;
-      --primary-text-color: #c6c2c2;
-      --info-text-color: #d3d3d3;
-      --background-color: #777;
-      --button-background-color: linear-gradient(#6f6f6f, #6f6f6f, #555);
-  
-      --main-background-color: #6f6f6f;
-      --textarea-background-color: #333; 
-      --header-background: linear-gradient(#333, #555, #777);
-      --footer-background: linear-gradient(#777, #555, #333);
-    }
-  } */
-  
