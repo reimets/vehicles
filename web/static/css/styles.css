@@ -176,10 +176,6 @@ footer {
     cursor: pointer;
 }
 
-/* #themeToggle {
-    Tuleviku jaoks koht olemas
-} */
-
 
 /* === Main Styles & Main Buttons === */
 /* ===== Filter Section & Buttons ===== */
@@ -291,9 +287,6 @@ nav {
     flex: auto;
 }
 
-/* #clearSelection {
-    Tuleviku jaoks koht olemas
-} */
 
 /* Readjusting, if page is smaller than 1100px */
 @media (max-width: 1100px) {
@@ -365,7 +358,7 @@ nav {
     max-height: max-content;
     color: var(--primary-text-color);
     text-align: left;
-    padding: 2rem;
+    padding: 10px;
     font-weight: bold;
 
     display: flex;
@@ -395,6 +388,36 @@ nav {
     color: var(--info-text-color);
     padding: 15px;
 }
+
+/* ===== Result Area ===== */
+.car-info-container {
+    display: flex;
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.car-image {
+    /* max-width: 200px; */
+    height: 200px;
+    border-radius: 4px;
+    margin-right: 20px;
+}
+
+.car-details {
+    /* text-shadow: 1px 2px 7px #000000; */
+
+    flex: 1;
+}
+
+/* #cars-output {
+    flex: 1;
+} */
+
+
 
 /* Readjusting, if page is smaller than 550px */
 @media (max-width: 550px) {

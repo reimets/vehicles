@@ -25,9 +25,9 @@ document.getElementById("themeToggle").addEventListener("click", function() {
 function toggleSelection(event) {
   console.log('Button clicked!'); // logs message to console - that was for testing. Result I saw f12=>console
   const button = event.target;
-    button.classList.toggle('selected');
+  button.classList.toggle('selected');
 
-  updateOutput();
+  updateOutput(globalCarData);
 }
 
 function selectAllManufacturers() {
@@ -35,9 +35,8 @@ function selectAllManufacturers() {
   document.querySelectorAll('.manufacturer-button').forEach(btn => {
     btn.classList.add('selected');
   });
-  
   // Uuenda väljundi sisu
-  updateOutput();
+  updateOutput(globalCarData);
 }
 
 function selectAllCategories() {
@@ -45,9 +44,8 @@ function selectAllCategories() {
   document.querySelectorAll('.category-button').forEach(btn => {
     btn.classList.add('selected');
   });
-  
   // Uuenda väljundi sisu
-  updateOutput();
+  updateOutput(globalCarData);
 }
 
 // function to clear selection
@@ -55,8 +53,7 @@ function toggleClearSelection() {
   document.querySelectorAll('.manufacturer-button, .category-button').forEach(btn => {
     btn.classList.remove('selected');
   });
-  
-  updateOutput();
+  updateOutput(innerHTML = '');
 }
 
 // function to SORT BY buttons (only one button at a time)
@@ -73,34 +70,150 @@ function handleSortButtonClick(event) {
   }  
   console.log('Sort by:', sortValue); // logs message to console - that was for testing. Result I saw f12=>console
 
-  updateOutput();
+  updateOutput(globalCarData);
 }
 
 
-// Function to output information
-function updateOutput() {
-  const selectedManufacturers = document.querySelectorAll('.manufacturer-button.selected');
-  const selectedCategories = document.querySelectorAll('.category-button.selected');
+// // Function to output information
+// function updateOutput() {
+//   const selectedManufacturers = document.querySelectorAll('.manufacturer-button.selected');
+//   const selectedCategories = document.querySelectorAll('.category-button.selected');
 
-  // We create arrays of the names of the selected manufacturers and categories
-  const selectedManufacturersNames = Array.from(selectedManufacturers).map(btn => btn.value);
-  const selectedCategoriesNames = Array.from(selectedCategories).map(btn => btn.value);
+//   // We create arrays of the names of the selected manufacturers and categories
+//   const selectedManufacturersNames = Array.from(selectedManufacturers).map(btn => btn.value);
+//   const selectedCategoriesNames = Array.from(selectedCategories).map(btn => btn.value);
 
-// Use the arrays created here to display the selected information to the user
-// For example, you can display names separated by commas
-  const outputElement = document.getElementById('info-output');
-  outputElement.innerHTML = `Selected manufacturers:<br>${selectedManufacturersNames.join('<br>')}<br><br>Selected categories:<br>${selectedCategoriesNames.join('<br>')}`;
+// // Use the arrays created here to display the selected information to the user
+// // For example, you can display names separated by commas
+//   const outputElement = document.getElementById('cars-output');
+//   outputElement.innerHTML = `Selected manufacturers:<br>${selectedManufacturersNames.join('<br>')}<br><br>Selected categories:<br>${selectedCategoriesNames.join('<br>')}`;
 
-// Create logic to update the information displayed in the information output field
+// // Create logic to update the information displayed in the information output field
+// }
+
+// //////////////////////////////////
+// fetch('temporary/data.json')
+//   .then(response => response.json())
+//   .then(data => {
+//     // Kasutage data objekti, et kuvada andmed veebilehel
+//     updateOutput(data);
+//   })
+//   .catch(error => console.error('Error loading the data:', error));
+
+
+// // //////////////////////////////////////
+// function displayCarInfo(data) {
+//   const selectedManufacturers = document.querySelectorAll('.manufacturer-button.selected');
+//   const selectedCategories = document.querySelectorAll('.category-button.selected');
+
+//     // 'data' on objekt või massiiv, mis sisaldab auto andmeid
+//   const output = document.getElementById('cars-output');
+
+//     // Eemalda vana sisu
+//   output.innerHTML = '';
+
+//     // Genereerib uue sisu iga auto kohta
+//   data.carModels.forEach(carModels => {
+//     const category = data.categories.find(category => category.id === carModels.categoryId);
+//     const categoryName = category ? category.name : 'Unknown';
+
+//     const carDiv = document.createElement('div');
+//     carDiv.classList.add('car-info-container');
+//     carDiv.innerHTML = `
+//     <img class="car-image" src="temporary/img/${carModels.image}" alt="${carModels.name}">
+//     <div class="car-details">
+//         <h2>${carModels.name}</h2>
+//         <ul>
+//             <li>Category: ${categoryName }</li>
+//             <li>Year: ${carModels.year}</li>
+//             <li>Engine: ${carModels.specifications.engine}</li>
+//             <li>Horsepower: ${carModels.specifications.horsepower}</li>
+//             <li>Transmission: ${carModels.specifications.transmission}</li>
+//             <li>Drivetrain: ${carModels.specifications.drivetrain}</li>
+//         </ul>
+//     </div>
+//     `;
+//     output.appendChild(carDiv);
+//   });
+// }
+
+///////////////////////////
+///////////////////////////
+//////////////////////////
+// Funktsioon, mis filtreerib ja kuvab autode andmeid vastavalt valikutele
+function updateOutput(data) {
+  console.log("updateOutput called with data", data); // for testing
+
+  const output = document.getElementById('cars-output');
+  const selectedManufacturers = Array.from(document.querySelectorAll('.manufacturer-button.selected')).map(btn => parseInt(btn.value));
+  const selectedCategories = Array.from(document.querySelectorAll('.category-button.selected')).map(btn => parseInt(btn.value));
+
+  // Eemalda eelmine sisu
+  output.innerHTML = '';
+  
+  if (!data || !data.carModels) {
+    console.error('Data is not loaded yet!');
+    return; // Katkesta funktsiooni täitmine, kui andmed pole veel laetud
 }
+
+  // Filtreeri autosid vastavalt valitud tootjatele ja kategooriatele
+  const filteredCars = data.carModels.filter(car => {
+    const matchesManufacturer = selectedManufacturers.length === 0 || selectedManufacturers.includes(car.manufacturerId);
+    const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(car.categoryId);
+    return matchesManufacturer && matchesCategory;
+  });
+
+  // Kuvab iga filtreeritud auto
+  filteredCars.forEach(carModel => {
+    const category = data.categories.find(category => category.id === carModel.categoryId);
+    const categoryName = category ? category.name : 'Unknown';
+
+    const carDiv = document.createElement('div');
+    carDiv.classList.add('car-info-container');
+    carDiv.innerHTML = `
+      <img class="car-image" src="temporary/img/${carModel.image}" alt="${carModel.name}">
+      <div class="car-details">
+          <h2>${carModel.name}</h2>
+          <ul>
+              <li>Category: ${categoryName}</li>
+              <li>Year: ${carModel.year}</li>
+              <li>Engine: ${carModel.specifications.engine}</li>
+              <li>Horsepower: ${carModel.specifications.horsepower}</li>
+              <li>Transmission: ${carModel.specifications.transmission}</li>
+              <li>Drivetrain: ${carModel.specifications.drivetrain}</li>
+          </ul>
+      </div>
+    `;
+    output.appendChild(carDiv);
+  });
+}
+
+
+
+  // -----------
+let globalCarData; // Globaalne muutuja andmete hoidmiseks
+// Andmete laadimine
+fetch('temporary/data.json')
+  .then(response => response.json())
+  .then(data => {
+    globalCarData = data; // Salvestage laetud andmed globaalsesse muutujasse
+    // updateOutput(globalCarData); // Kutsuge esimene kuvamine välja kohe pärast andmete laadimist
+  })
+  .catch(error => console.error('Error loading the data:', error));
+
+
 
 // Add event handlers to all buttons in FILTER BY area
-document.querySelectorAll('.manufacturer-button').forEach(btn => {
+// document.querySelectorAll('.manufacturer-button').forEach(btn => {
+//   btn.addEventListener('click', toggleSelection);
+// });
+// Lisame sündmusekäsitlejad kõigile nuppudele
+document.querySelectorAll('.manufacturer-button, .category-button').forEach(btn => {
   btn.addEventListener('click', toggleSelection);
 });
-document.querySelectorAll('.category-button').forEach(btn => {
-  btn.addEventListener('click', toggleSelection);
-});
+// document.querySelectorAll('.category-button').forEach(btn => {
+//   btn.addEventListener('click', toggleSelection);
+// });
 // Add event handlers to all buttons in SORT BY area
 document.querySelectorAll('.sort-button').forEach(button => {
   button.addEventListener('click', handleSortButtonClick);
@@ -110,7 +223,7 @@ document.getElementById('clearSelection').addEventListener('click', toggleClearS
 // 2 events to select all buttons in FILTER BY area
 document.getElementById('all-manufacturers-button').addEventListener('click', selectAllManufacturers);
 document.getElementById('all-categories-button').addEventListener('click', selectAllCategories);
-document.getElementById('make-asc').addEventListener('click', () => sortData('make-asc'));
+// document.getElementById('make-asc').addEventListener('click', () => sortData('make-asc'));
 // to sort by buttons
 document.querySelector('.sort-button[value="make-asc"]').addEventListener('click', () => sortData('make-asc'));
 document.querySelector('.sort-button[value="make-desc"]').addEventListener('click', () => sortData('make-desc'));
