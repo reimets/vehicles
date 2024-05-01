@@ -17,13 +17,14 @@ lisaks tegin body-sse ja ka js-i lisad, et leht laeks sujuvalt 1 sek jooksul - n
     --filterbutton-text-color: #333;
     --background-color: #777;
     --button-background-color: linear-gradient(#6f6f6f, #6f6f6f, #555);
+    --button-background-color-hoover: linear-gradient(#555, #6f6f6f, #6f6f6f);
     --filterbutton-background-color: #919191;
     --selectedbutton-frame-color: #ffffff; 
-
     --main-background-color: #6f6f6f;
     --textarea-background-color: #333; 
     --header-background: linear-gradient(#333, #555, #777);
     --footer-background: linear-gradient(#777, #555, #333);
+    --output-text-color: #4b4b4b;
 }
 
 [data-theme="light"] {
@@ -33,14 +34,14 @@ lisaks tegin body-sse ja ka js-i lisad, et leht laeks sujuvalt 1 sek jooksul - n
     --filterbutton-text-color: #c6c2c2;
     --background-color: #ffffff;
     --button-background-color: linear-gradient(#b8b8b8, #f0f0f0, #f0f0f0);
+    --button-background-color-hoover: linear-gradient(#f0f0f0, #f0f0f0, #b8b8b8);
     --filterbutton-background-color: #666;
     --selectedbutton-frame-color: #000000; 
-
-
     --main-background-color: #f0f0f0;
     --textarea-background-color: #ffffff;
     --header-background: linear-gradient(#b8b8b8, #cfcfcf, #ffffff);
     --footer-background: linear-gradient(#ffffff, #cfcfcf, #b8b8b8);
+    --output-text-color: #666666;
 }
 
 * {
@@ -59,7 +60,6 @@ body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     min-width: 280px;
-    /* min-width: 975px; */
 }
 
 body.loaded {
@@ -85,10 +85,7 @@ main {
     padding: 20px;
     background-color: var(--main-background-color);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
-    /* /////////////////////// */
-    /* min-height: 500px; */
     max-height: max-content;
-    /* min-height: calc(155vh - 160px);  */
     height: flex;
 }
 
@@ -108,7 +105,7 @@ footer {
     display: flex;
     justify-content: center ; 
     width: 100%;
-    gap: clamp(25px, 20vw, 350px); /* vahe minimaalselt 50px, kohandub ekraani laiusega, maksimaalselt 350px */
+    gap: clamp(25px, 20vw, 350px); /* spacing minimum 50px, adjusts to screen width, maximum 350px */
 }
 
 .oval {
@@ -121,10 +118,6 @@ footer {
     text-align: center;
     line-height: 20px;
     border-radius: 50%; 
-}
-
-.oval:hover {
-    opacity: 0.7;
 }
 
 .logo {
@@ -153,6 +146,9 @@ footer {
 
 .logo-container:hover .popup {
     display: block;
+    width: max-content;
+    padding: 10px;
+    margin: auto;
 }
 
 #headersText {
@@ -185,7 +181,7 @@ nav {
     font-weight: bold;
 
     display: flex;
-    align-items:flex-start ;
+    align-items:flex-start;
     min-width: 100%;
     max-width: max-content;
     padding: 10px;
@@ -208,7 +204,6 @@ nav {
 }
 
 .oval-clear {
-    /* margin-top: 5px; */
     margin-bottom: 5px;
 
     width: 130px;
@@ -276,46 +271,20 @@ nav {
 }
 
 #manufacturers {
-    /* flex: 0 0 340px; */
     flex: auto;
-    /* flex: 0 0 45%; */
 }
 
 #categories {
-    /* flex: 0 0 340px;  */
-    /* flex: 0 0 45%; */
     flex: auto;
 }
 
 
-/* Readjusting, if page is smaller than 1100px */
-@media (max-width: 1100px) {
-    #headersText {
-        font-size: 2em;
-    }
-
-    .flex-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .flex-item {
-        max-width: 100%;
-    }
-
-    #manufacturers, #categories {
-        margin-bottom: 10px;
-    }
-
-    #filterBy, #clearSelection {
-        text-align: center;
-        margin-top: 5px;
-        margin-bottom: 10px;
-    }
-}
-
 
 /* ===== Sort and Result Area & Buttons ===== */
+h2 {
+    text-shadow: 1px 2px 4px #6e6e6e;
+
+}
 .main-content {
     display: flex;
 }
@@ -328,7 +297,6 @@ nav {
     text-align: center;
     padding: 0.6rem;
     font-weight: bold;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -356,11 +324,9 @@ nav {
     width: 79%;
     min-height: 500px;
     max-height: max-content;
-    color: var(--primary-text-color);
     text-align: left;
     padding: 10px;
     font-weight: bold;
-
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -382,78 +348,150 @@ nav {
     padding: 25px; 
 }
 
-#information {
-    font-family: 'Consolas', 'Courier New', monospace;
-    font-size: 14px;
-    color: var(--info-text-color);
-    padding: 15px;
-}
 
 /* ===== Result Area ===== */
 .car-info-container {
     display: flex;
+    align-items: center; /* Center items vertically */
     background-color: #fff;
     padding: 10px;
     margin-bottom: 10px;
+    margin-right: auto; /* Centers the container if the width is less than 100% */
+    margin-left: auto; /* Centers the container if the width is less than 100% */
     border: 1px solid #eee;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 75%; /* Reduced width, adjust as needed */
+    max-width: 600px; /* Optional: Ensures the container does not get too wide on larger screens */
+    overflow: hidden; /* Hide any overflow */
 }
+
 
 .car-image {
-    /* max-width: 200px; */
-    height: 200px;
-    border-radius: 4px;
+    flex: 0 0 200px; /* Do not grow or shrink but maintain 200px width */
+    height: auto; /* Height will be auto to maintain aspect ratio */
     margin-right: 20px;
+    overflow: hidden; /* Ensure the image does not bleed outside the boundary */
 }
+
+.car-image img {
+    width: 100%; /* Ensure the image fills the width of its container */
+    height: auto; /* Height is automatic to preserve the aspect ratio */
+    object-fit: contain; /* Ensures the image fits the container while maintaining aspect ratio without cropping */
+}
+
 
 .car-details {
-    /* text-shadow: 1px 2px 7px #000000; */
-
-    flex: 1;
+    color: var(--output-text-color);
 }
 
-/* #cars-output {
-    flex: 1;
-} */
+.car-details ul {
+    list-style-type: none;
+}
+
+#cars-output {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
 
 
+/* ===== Changing pages if page size changes ===== */
+/* Readjusting, if page is smaller than 1100px */
+@media (max-width: 1900px) {
+    .car-info-container {
+        width: 100%;
+    }
+}
 
-/* Readjusting, if page is smaller than 550px */
-@media (max-width: 550px) {
-    .flex-container, .flex-item, #filterBy {
+/* Readjusting, if page is smaller than 1100px */
+@media (max-width: 1100px) {
+    #headersText {
+        font-size: 2em;
+    }
+
+    header, #headersText, .flex-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .flex-item {
+        max-width: 100%;
+        padding: 10px;
+    }
+    #manufacturers, #categories {
+        margin-bottom: 10px;
+    }
+    #filterBy, #clearSelection {
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+}
+
+/* Readjusting, if page is smaller than 1100px */
+@media (max-width: 975px) {
+    .car-info-container {
+        width: 100%;
+    }
+}
+
+/* Readjusting, if page is smaller than 680px for pop-ups of the manufacturers */
+@media (max-width: 680px) {
+    .logo-container:hover .popup {
+        position: fixed; /* Kasutage fixed positsioneerimist, et pop-up ilmuks suhtes viewportiga */
+        top: 150px; /* Seadistage pop-up ekraani vertikaalsesse keskele */
+        width: max-content;
+        height: max-content;
+        padding: 10px;
+        margin: auto;
+    }
+}
+
+/* Readjusting, if page is smaller than 625px */
+@media (max-width: 625px) {
+    .flex-container, .flex-item, #filterBy, #cars-output {
         width: 100%;
         padding: 0; 
         margin: 0 auto;
     }
-
     #filterBy {
         padding: 25px 0;
         margin-bottom: 10px;
     }
-
     .main-content {
         flex-direction: column; 
     }
-
     .sidebar, .contentArea {
         width: 100%; 
         margin: 10px 0; 
     }
-
     .sidebar {
         align-items: center; 
     }  
-
     #sortBy {
         margin-bottom: 10px;
     }
-
     .manufacturer-button, .category-button {
         width: 130px;
     } 
+    .car-image {
+        height: flex;
+    }
 }
 
+/* Readjusting, if page is smaller than 530px */
+@media (max-width: 530px) {
+    .car-info-container {
+        flex-direction: column; /* Change the direction of the flex so that the elements are under each other */
+    }
+    .car-image {
+        padding: 10px;
+        height: auto;
+        width: 100%;
+        object-fit: contain; /* Ensures the image fits the container while maintaining aspect ratio without cropping */
+    }
+}
 
 /* === Footer Styles & Footer Buttons === */
 #footer-icons{
@@ -475,10 +513,16 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    /* transition: all 0.3s ease; */
 }
 
-button:hover {
-    opacity: 0.7;
+button:hover, #home:hover {
+    background-image: var(--button-background-color-hoover);
+    transform: translateY(-1px); /* Subtle lift effect */
+}
+
+button:active, #home:active {
+    transform: translateY(1px); /* Mimic button press effect */
 }
 
 /* when button is selected */
@@ -486,3 +530,194 @@ button:hover {
     border: 2px solid var(--selectedbutton-frame-color);
         /* with this line 1px frame will be greated around button */
 }
+
+/* === ERROR 404 PAGE === */
+body.error-page {
+    opacity: 1;
+    background-image: var(--header-background);
+    text-align: center;
+    font-weight: bold;
+    padding: 50px;
+}
+
+#errorText {
+    text-align: center;
+    text-shadow: 1px 2px 7px #000000;
+    font-size: 3em;
+    font-weight: 800;
+    margin-bottom: 30px;
+}
+
+/* #information {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    color: var(--info-text-color);
+    padding: 15px;
+} */
+
+:root {
+    --popup-text-color: #333; /* Dark gray, adjust as needed */
+}
+
+.car-details-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    width: 80%;
+    max-width: 600px;
+    background-color: #fff;
+    border: 2px solid #333;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+    border-radius: 10px;
+    overflow: hidden;
+    color: var(--popup-text-color); /* Use the variable for color */
+}
+
+
+.car-info {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.car-image-olha {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.car-image-olha img {
+    width: 100%; 
+    height: auto;
+    max-height: 200px; 
+    object-fit: cover;
+}
+
+.about-button {
+    padding: 10px 20px; /* Comfortable padding for usability */
+    background-image: linear-gradient(to right, #a2a2a2, #e6e6e6); /* Subtle gray gradient */
+    color: #333; /* Dark gray text for contrast */
+    font-weight: bold; /* Bold font to make the text pop */
+    border: none; /* No border for a sleek appearance */
+    border-radius: 25px; /* Smooth, rounded corners */
+    cursor: pointer; /* Indicates it's clickable */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    transition: all 0.3s ease; /* Smooth transitions for hover effects */
+}
+
+.about-button:hover {
+    background-image: linear-gradient(to right, #e6e6e6, #a2a2a2); /* Invert gradient on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhance shadow for a 3D effect */
+    transform: translateY(-2px); /* Subtle lift on hover */
+}
+
+.about-button:active {
+    transform: translateY(1px); /* Mimic button press effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Reduce shadow to simulate pressing down */
+}
+
+
+.close-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    background-color: #0056b3;
+    color: black;
+}
+
+.no-cars-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    width: 300px;
+    background-color: #fff; /* Make sure this contrasts with the background */
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    color: black; /* Ensure text color contrasts for visibility */
+    display: none; /* Starts hidden */
+}
+
+/* Add important to force display change */
+.no-cars-popup.show {
+    display: block !important;
+}
+
+.no-cars-popup button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.no-cars-popup button:hover {
+    color: black;
+    background-color: var(--footer-background); /* Slightly lighter on hover */
+}
+
+/* Ensuring that the popup is responsive for mobile devices */
+@media (max-width: 600px) {
+    .no-cars-popup {
+        width: 80%;
+        padding: 15px;
+    }
+}
+
+/* Base style for the warning popup */
+.warning-popup {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 300px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    color: black; /* Ensures the text is dark in the light theme */
+    display: none; /* Initially hidden */
+}
+
+.warning-popup p {
+    margin: 0;
+    font-size: 16px;
+    color: black; /* Darker text color */
+}
+
+/* Style for the close button in light theme */
+.warning-popup button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.warning-popup button:hover {
+    color: black;
+} 
+

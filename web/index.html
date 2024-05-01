@@ -1,18 +1,10 @@
-<!-- python3 -m http.server -->
-<!-- Ava käsurea aken või terminal.
-Mine kataloogi, kus su index.html fail asub.
-Sisesta käsk python -m http.server (see käivitab lokaalse veebiserveri pordil 8000).
-Ava veebibrauser ja mine aadressile http://localhost:8000.
- -->
-
-
- <!DOCTYPE html>
+<!DOCTYPE html>
  <html lang="en">
      <head>
          <meta charset="UTF-8">
          <meta name="viewport" content="width=device-width, initial-scale=1.0">
          <title>Car-viewer</title>
-         <link rel="stylesheet" href="/static/css/styles.css">
+         <link rel="stylesheet" href="./web/static/css/styles.css">
      </head>
  
  <body>      
@@ -26,44 +18,45 @@ Ava veebibrauser ja mine aadressile http://localhost:8000.
          <!-- manufacturers logos area -->
          <div class="logos">
              <div class="logo-container">
-                <img id="nissan-logo" class="logo" src="/static/icons/nissan-logo.png" alt="Nissan logo">
-                <div class="popup" id="nissan-popup">Nissan</div>
+                <img id="nissan-logo" class="logo" src="/web/static/icons/nissan-logo.png" alt="Nissan logo">
+                <div class="popup" id="nissan-popup">Manufacturer: Nissan<br>Country: Japan<br>Founding Year: 1933</div>
+                <!-- so much info I added to Nissan just for first design stage.. all info should actually come from server, through Go -->
              </div>
              <div class="logo-container">
-                <img id="honda-logo" class="logo" src="/static/icons/honda-logo.png" alt="Honda logo">
-                <div class="popup" id="honda-popup">Honda</div>
+                <img id="honda-logo" class="logo" src="/web/static/icons/honda-logo.png" alt="Honda logo">
+                <div class="popup" id="honda-popup">Manufacturer: Honda<br>Country: Japan<br>Founding Year: 1948</div>
              </div>
              <div class="logo-container">
-                <img id="hyundai-logo" class="logo" src="/static/icons/hyundai-logo.png" alt="Hyundai logo">
-                <div class="popup" id="hyundai-popup">Hyundai</div>
+                <img id="hyundai-logo" class="logo" src="/web/static/icons/hyundai-logo.png" alt="Hyundai logo">
+                <div class="popup" id="hyundai-popup">Manufacturer: Hyundai<br>Country: South Korea<br>Founding Year: 1967</div>
              </div>
              <div class="logo-container">
-                <img id="chevrolet-logo" class="logo" src="/static/icons/chevrolet-logo.png" alt="Chevrolet logo">
-                <div class="popup" id="chevrolet-popup">Chevrolet</div>
+                <img id="chevrolet-logo" class="logo" src="/web/static/icons/chevrolet-logo.png" alt="Chevrolet logo">
+                <div class="popup" id="chevrolet-popup">Manufacturer: Chevrolet<br>Country: United States<br>Founding Year: 1911</div>
              </div>
              <div class="logo-container">
-                <img id="merzedes-bens-logo-logo" class="logo" src="/static/icons/merzedes-bens-logo.png" alt="Merzedes-Bens logo">
-                <div class="popup" id="merzedes-bens-popup">Merzedes-Bens</div>
+                <img id="merzedes-bens-logo-logo" class="logo" src="/web/static/icons/merzedes-bens-logo.png" alt="Merzedes-Bens logo">
+                <div class="popup" id="merzedes-bens-popup">Manufacturer: Mercedes-Benz<br>Country: Germany<br>Founding Year: 1926</div>
              </div>
              <div class="logo-container">
-                <img id="audi-logo" class="logo" src="/static/icons/audi-logo.png" alt="Audi logo">
-                <div class="popup" id="audi-popup">Audi</div>
+                <img id="audi-logo" class="logo" src="/web/static/icons/audi-logo.png" alt="Audi logo">
+                <div class="popup" id="audi-popup">Manufacturer: Audi<br>Country: Germany<br>Founding Year: 1910</div>
              </div>
              <div class="logo-container">
-                <img id="ford-logo" class="logo" src="/static/icons/ford-logo.png" alt="Ford logo">
-                <div class="popup" id="ford-popup">Ford</div>
+                <img id="ford-logo" class="logo" src="/web/static/icons/ford-logo.png" alt="Ford logo">
+                <div class="popup" id="ford-popup">Manufacturer: Ford<br>Country: United States<br>Founding Year: 1903</div>
              </div>
              <div class="logo-container">
-                <img id="bmw-logo" class="logo" src="/static/icons/bmw-logo.png" alt="BMW logo">
-                <div class="popup" id="bmw-popup">BMW</div>
+                <img id="bmw-logo" class="logo" src="/web/static/icons/bmw-logo.png" alt="BMW logo">
+                <div class="popup" id="bmw-popup">Manufacturer: BMW<br>Country: Germany<br>Founding Year: 1916</div>
              </div>
              <div class="logo-container">
-                <img id="lexus-logo" class="logo" src="/static/icons/lexus-logo.png" alt="Lexus logo">
-                <div class="popup" id="lexus-popup">Lexus</div>
+                <img id="lexus-logo" class="logo" src="/web/static/icons/lexus-logo.png" alt="Lexus logo">
+                <div class="popup" id="lexus-popup">Manufacturer: Lexus<br>Country: Japan<br>Founding Year: 1989</div>
              </div>
              <div class="logo-container">
-                <img id="toyota-logo" class="logo" src="/static/icons/toyota-logo.png" alt="Toyota logo">
-                <div class="popup" id="toyota-popup">Toyota</div>
+                <img id="toyota-logo" class="logo" src="/web/static/icons/toyota-logo.png" alt="Toyota logo">
+                <div class="popup" id="toyota-popup">Manufacturer: Toyota<br>Country: Japan<br>Founding Year: 1937</div>
              </div>
          </div>
      </header>
@@ -131,9 +124,9 @@ Ava veebibrauser ja mine aadressile http://localhost:8000.
  
              </aside>
              <div class="contentArea">
-                <!-- <div id="info-output">
-                    <p id="information"> One day results will appear here..</p>
-                </div>  -->
+                <!-- <div id="info-output"> -->
+                    <!-- <p id="information"> One day results will appear here..</p> -->
+                <!-- </div>  -->
                 <div id="cars-output">
                     <!-- Dünaamiliselt genereeritud autoinfot kuvatakse siin -->
 
@@ -144,16 +137,16 @@ Ava veebibrauser ja mine aadressile http://localhost:8000.
  
      <footer>
          <section>
-             <p>This page is made by Reigo Reimets in 2024</p>
+             <p>This page is made by Reigo Reimets and Olha Lavryshyn in 2024</p>
              <ul id="footer-icons">
-                 <li id="socialLogos"><a href="https://www.instagram.com/reigo.reimets"target="_blank" rel="noopener noreferrer"><img src="/static/icons/instagram_logo.png" alt="Icon: Instagram icon" height="20"> </a></li>
-                 <li id="socialLogos"><a href="https://www.facebook.com/reigo.reimets"target="_blank" rel="noopener noreferrer"><img src="/static/icons/facebook-logo2.png" alt="Icon: Facebook icon" height="20"> </a></li>
-                 <li id="socialLogos"><a href="https://www.linkedin.com/in/reigoreimets/"target="_blank" rel="noopener noreferrer"><img src="/static/icons/linkedin-logo2.png" alt="Icon: LinkedIn icon" height="20"> </a></li>
+                 <li id="socialLogos"><a href="https://www.instagram.com/reigo.reimets"target="_blank" rel="noopener noreferrer"><img src="/web/static/icons/instagram_logo.png" alt="Icon: Instagram icon, Reigo" height="20"> </a></li>
+                 <li id="socialLogos"><a href="https://www.facebook.com/reigo.reimets"target="_blank" rel="noopener noreferrer"><img src="/web/static/icons/facebook-logo2.png" alt="Icon: Facebook icon, Reigo" height="20"> </a></li>
+                 <li id="socialLogos"><a href="https://www.linkedin.com/in/reigoreimets/"target="_blank" rel="noopener noreferrer"><img src="/web/static/icons/linkedin-logo2.png" alt="Icon: LinkedIn icon, Reigo" height="20"> </a></li>
              </ul>
          </section>
      </footer>
  
-     <script src="/static/js/script.js"></script>
+     <script src="./web/static/js/script.js"></script>
  
  </body>
  </html>
