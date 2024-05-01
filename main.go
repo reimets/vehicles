@@ -53,19 +53,37 @@ type Data struct {
 
 var data Data
 
-// loadCarData reads and unmarshals the car data JSON file into the data struct.
 func loadCarData() error {
-	file, err := os.ReadFile("./api/data.json") // Make sure the path is correct
-	if err != nil {
+	// Fetch data from an external API instead of a local file
+	if err := fetchDataFromAPI("http://localhost:3000/api/manufacturers", &data.Manufacturers); err != nil {
 		return err
 	}
-
-	err = json.Unmarshal(file, &data)
-	if err != nil {
+	if err := fetchDataFromAPI("http://localhost:3000/api/categories", &data.Categories); err != nil {
 		return err
 	}
-
+	if err := fetchDataFromAPI("http://localhost:3000/api/models", &data.CarModels); err != nil {
+		return err
+	}
 	return nil
+}
+
+// fetchDataFromAPI makes an HTTP GET request to fetch data from the specified API endpoint.
+func fetchDataFromAPI(url string, target interface{}) error {
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	return json.NewDecoder(resp.Body).Decode(target)
+}
+
+// Serve index page
+func serveIndex(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+	http.ServeFile(w, r, "./web/index.html")
 }
 
 // enhanceModelsWithCategoryData enriches car models with category names from a mapping.
@@ -111,12 +129,8 @@ func errorHandler(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {
-				// Log the error
 				log.Printf("Internal server error: %v", err)
-				// Notify the monitoring team or system (if any)
-				notifySystemOfError(err)
-				// Respond with a generic error message
-				http.Error(w, "Oops! Something went wrong on our end. Our team has been notified, and we're working hard to fix it. Please try again later.", http.StatusInternalServerError)
+				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			}
 		}()
 		next(w, r)
@@ -135,8 +149,7 @@ func main() {
 	if err := loadCarData(); err != nil {
 		log.Fatalf("Failed to load car data: %v", err)
 	}
-	// added by reigo
-	enhanceModelsWithCategoryData(data.CarModels, data.Categories)
+	enhanceCarData()
 
 	http.HandleFunc("/", errorHandler(serveIndex))
 	http.HandleFunc("/api/cars", errorHandler(carsHandler))
@@ -154,33 +167,27 @@ func main() {
 }
 
 // serveIndex serves the main index HTML file or a 404 error if the path is incorrect.
-func serveIndex(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" {
-		w.WriteHeader(http.StatusNotFound) // Lisa see rida
-		http.ServeFile(w, r, "./web/404.html")
-		return
-	}
-	http.ServeFile(w, r, "./web/index.html")
-}
 
 // carsHandler handles API requests for car data based on manufacturer and category filters.
 func carsHandler(w http.ResponseWriter, r *http.Request) {
 	manufacturerId, _ := strconv.Atoi(r.URL.Query().Get("manufacturerId"))
 	categoryId, _ := strconv.Atoi(r.URL.Query().Get("categoryId"))
 
-	// Log the received values for debugging
-	log.Printf("Received manufacturerId: %d, categoryId: %d", manufacturerId, categoryId)
-
-	var filteredCars []CarModels
-	for _, car := range data.CarModels {
-		if (manufacturerId == 0 || car.ManufacturerId == manufacturerId) &&
-			(categoryId == 0 || car.CategoryId == categoryId) {
-			filteredCars = append(filteredCars, car)
-		}
-	}
+	filteredCars := filterCars(manufacturerId, categoryId)
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(filteredCars)
+}
+
+func filterCars(manufacturerId, categoryId int) []CarModels {
+	var filtered []CarModels
+	for _, car := range data.CarModels {
+		if (manufacturerId == 0 || car.ManufacturerId == manufacturerId) &&
+			(categoryId == 0 || car.CategoryId == categoryId) {
+			filtered = append(filtered, car)
+		}
+	}
+	return filtered
 }
 
 // matchesFilter checks if the given item ID matches the filter. If no filter is specified, it returns true.
@@ -370,4 +377,34 @@ func carDetailsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+}
+
+// Fetch all manufacturers from the Cars API
+func FetchManufacturers() ([]Manufacturer, error) {
+	resp, err := http.Get("http://localhost:3000/api/manufacturers")
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var manufacturers []Manufacturer
+	if err := json.NewDecoder(resp.Body).Decode(&manufacturers); err != nil {
+		return nil, err
+	}
+	return manufacturers, nil
+}
+
+// Fetch all categories from the Cars API
+func FetchCategories() ([]Category, error) {
+	resp, err := http.Get("http://localhost:3000/api/categories")
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var categories []Category
+	if err := json.NewDecoder(resp.Body).Decode(&categories); err != nil {
+		return nil, err
+	}
+	return categories, nil
 }

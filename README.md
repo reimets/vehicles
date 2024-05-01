@@ -37,10 +37,9 @@ Navigate into the project directory:
 ```bash
 cd cars
 ```
-Run the program using the Go command line:
-```bash
-go run main.go
-```
+You need to open 2 windows in vs studio:
+- /cars/api/node_modules$ npm start
+- /cars$ go run main.go
 
 ## Bonus Features
 - Light/Dark mode button to change mode

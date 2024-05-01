@@ -1,0 +1,7 @@
+cars API käivitamiseks:
+node main.js
+
+http://localhost:3000/api/manufacturers
+http://localhost:3000/api/categories
+http://localhost:3000/api/models
+
