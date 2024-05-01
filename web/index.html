@@ -20,7 +20,6 @@
              <div class="logo-container">
                 <img id="nissan-logo" class="logo" src="/web/static/icons/nissan-logo.png" alt="Nissan logo">
                 <div class="popup" id="nissan-popup">Manufacturer: Nissan<br>Country: Japan<br>Founding Year: 1933</div>
-                <!-- so much info I added to Nissan just for first design stage.. all info should actually come from server, through Go -->
              </div>
              <div class="logo-container">
                 <img id="honda-logo" class="logo" src="/web/static/icons/honda-logo.png" alt="Honda logo">
@@ -65,8 +64,8 @@
          <nav>
              <div class="flex-container">
                  <div class="flex-item">
-                     <p id="filterBy"> FILTER BY... </p>
-                 </div>
+                    <p id="filterBy"> FILTER BY... <br><br>..By<br>Manufacturer<br><br>or<br><br>..By<br>Category</p>
+                </div>
      
                  <div class="flex-item" id="manufacturers">
                          <button id="all-manufacturers-button" class="all-manufacturers-button" value="all-manufacturers">All Manufacturers</button>
@@ -124,12 +123,8 @@
  
              </aside>
              <div class="contentArea">
-                <!-- <div id="info-output"> -->
-                    <!-- <p id="information"> One day results will appear here..</p> -->
-                <!-- </div>  -->
                 <div id="cars-output">
-                    <!-- Dünaamiliselt genereeritud autoinfot kuvatakse siin -->
-
+                    <!-- Dynamically generated car information is displayed here -->
                 </div>
              </div>
          </div>

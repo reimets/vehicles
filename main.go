@@ -53,6 +53,7 @@ type Data struct {
 
 var data Data
 
+// loadCarData reads and unmarshals the car data JSON file into the data struct.
 func loadCarData() error {
 	file, err := os.ReadFile("./api/data.json") // Make sure the path is correct
 	if err != nil {
@@ -67,7 +68,7 @@ func loadCarData() error {
 	return nil
 }
 
-// added by reigo
+// enhanceModelsWithCategoryData enriches car models with category names from a mapping.
 func enhanceModelsWithCategoryData(models []CarModels, categories []Category) {
 	categoryMap := make(map[int]string)
 	for _, category := range categories {
@@ -81,6 +82,7 @@ func enhanceModelsWithCategoryData(models []CarModels, categories []Category) {
 	}
 }
 
+// enhanceCarData maps manufacturer details to car models for enriched output.
 func enhanceCarData() {
 	manufacturerMap := make(map[int]Manufacturer)
 	for _, m := range data.Manufacturers {
@@ -104,6 +106,7 @@ func enhanceCarData() {
 	}
 }
 
+// errorHandler is a middleware that recovers from panics and logs the error, sends notifications, and returns a user-friendly error message.
 func errorHandler(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
@@ -120,11 +123,13 @@ func errorHandler(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
+// notifySystemOfError logs the occurrence of an error for monitoring purposes.
 func notifySystemOfError(err interface{}) {
 	// Implementation details depend on the error reporting tool you use
 	log.Printf("Error reported to monitoring system: %v", err)
 }
 
+// Main function sets up the server, loads car data, and defines HTTP routes.
 func main() {
 	log.SetOutput(os.Stdout)
 	if err := loadCarData(); err != nil {
@@ -148,7 +153,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
 
-// ****************** I added 404 thing to this function ******************
+// serveIndex serves the main index HTML file or a 404 error if the path is incorrect.
 func serveIndex(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		w.WriteHeader(http.StatusNotFound) // Lisa see rida
@@ -158,6 +163,7 @@ func serveIndex(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./web/index.html")
 }
 
+// carsHandler handles API requests for car data based on manufacturer and category filters.
 func carsHandler(w http.ResponseWriter, r *http.Request) {
 	manufacturerId, _ := strconv.Atoi(r.URL.Query().Get("manufacturerId"))
 	categoryId, _ := strconv.Atoi(r.URL.Query().Get("categoryId"))
@@ -177,6 +183,7 @@ func carsHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(filteredCars)
 }
 
+// matchesFilter checks if the given item ID matches the filter. If no filter is specified, it returns true.
 func matchesFilter(itemID int, filter string) bool {
 	if filter == "" {
 		return true // No filter specified, always match
@@ -188,6 +195,7 @@ func matchesFilter(itemID int, filter string) bool {
 	return itemID == filterInt
 }
 
+// contains checks if a slice of integers contains a specific item.
 func contains(slice []int, item int) bool {
 	for _, s := range slice {
 		if s == item {
@@ -197,6 +205,7 @@ func contains(slice []int, item int) bool {
 	return false
 }
 
+// sortCarsHandler handles the sorting of cars based on various fields specified via query parameters.
 func sortCarsHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("sortCarsHandler called")
 	if r.Method != http.MethodGet {
@@ -229,6 +238,7 @@ func sortCarsHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(carsToSort)
 }
 
+// sortCarsByField determines the order of two car models based on the specified field and order.
 func sortCarsByField(a, b CarModels, field, order string) bool {
 	switch field {
 	case "make":
@@ -295,6 +305,7 @@ func extractNumberFromString(s string) (int, string) {
 	return 0, s // Default to 0 if no number is found
 }
 
+// carDetailsHandler fetches detailed information about a specific car by its ID.
 func carDetailsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
